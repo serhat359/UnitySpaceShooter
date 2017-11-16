@@ -86,7 +86,7 @@ public class MainPlayerScript : MonoBehaviour
         }
     }
 
-    void Die()
+    public void Die()
     {
         animator.SetTrigger(Parameters.Die);
         fireGroup.SetActive(false);

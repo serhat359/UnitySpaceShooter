@@ -147,6 +147,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 1081953805}
   gameOverWinImage: {fileID: 1420690839}
   gameOverLoseImage: {fileID: 322175546}
+  boss: {fileID: 1658777425063412, guid: 45d7f03cbe77bf3438f12f9fbb998e4c, type: 2}
 --- !u!4 &234735151
 Transform:
   m_ObjectHideFlags: 0
@@ -1445,7 +1446,7 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 8f4a06b76dfaee7418f1ea95324379cf, type: 2}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

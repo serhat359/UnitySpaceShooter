@@ -9,18 +9,12 @@ public class DestroyAfterAWhileScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(DestroyThisInstance());
+        Destroy(gameObject, lifeSeconds);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-    }
-
-    IEnumerator DestroyThisInstance()
-    {
-        yield return new WaitForSeconds(lifeSeconds);
-        Destroy(gameObject);
     }
 }

@@ -14,6 +14,9 @@ public class GameScript : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject gameOverWinImage;
     public GameObject gameOverLoseImage;
+    public GameObject boss;
+
+    private int waveCountBeforeBoss = 4;
 
     // Use this for initialization
     void Start()
@@ -35,14 +38,14 @@ public class GameScript : MonoBehaviour
 
     IEnumerator StartEnemySpawning()
     {
-        while (true)
+        for (int i = 0; i < waveCountBeforeBoss; i++)
         {
             yield return CreateNewWave();
 
             yield return new WaitForSeconds(5f);
         }
 
-        //yield return CreateNewWave();
+        yield return StartBossBattle();
     }
 
     IEnumerator CreateNewWave()
@@ -56,6 +59,14 @@ public class GameScript : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    IEnumerator StartBossBattle()
+    {
+        GameObject boss = Instantiate(this.boss);
+
+        // This line was written for syntax purposes
+        yield return new WaitForSeconds(0);
     }
 
     public void GameOverDead()
