@@ -55,7 +55,11 @@
      <Compile Include="Assets\Scripts\DestroyAfterAWhileScript.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\GameScript.cs" />
+     <Compile Include="Assets\Scripts\IAnimatedLater.cs" />
+     <Compile Include="Assets\Scripts\LaserScript.cs" />
      <Compile Include="Assets\Scripts\MainPlayerScript.cs" />
+     <Compile Include="Assets\Scripts\ScoreScript.cs" />
+     <Compile Include="Assets\Scripts\Tags.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -8,6 +8,7 @@ public class GameScript : MonoBehaviour
 
     public GameObject enemyObject;
     public GameObject enemyAnimations;
+    public int score;
 
     // Use this for initialization
     void Start()
