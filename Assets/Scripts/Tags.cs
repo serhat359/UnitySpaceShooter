@@ -8,3 +8,8 @@ public class Tags
     public const string Laser = "Laser";
     public const string Player = "Player";
 }
+
+public class Parameters
+{
+    public const string Die = "Die";
+}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,14 +7,22 @@ public class GameScript : MonoBehaviour
 {
     public static GameScript instance;
 
+    public int score = 0;
+    public bool isAlive = true;
     public GameObject enemyObject;
     public GameObject enemyAnimations;
-    public int score;
+    public GameObject gameOverScreen;
+    public GameObject gameOverWinImage;
+    public GameObject gameOverLoseImage;
 
     // Use this for initialization
     void Start()
     {
         instance = this;
+        isAlive = true;
+        gameOverScreen.SetActive(false);
+        gameOverWinImage.SetActive(false);
+        gameOverLoseImage.SetActive(false);
 
         StartCoroutine(StartEnemySpawning());
     }
@@ -47,5 +56,23 @@ public class GameScript : MonoBehaviour
 
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public void GameOverDead()
+    {
+        gameOverLoseImage.SetActive(true);
+        GameOver();
+    }
+
+    public void GameOverWin()
+    {
+        gameOverWinImage.SetActive(true);
+        GameOver();
+    }
+
+    private void GameOver()
+    {
+        gameOverScreen.SetActive(true);
+        Time.timeScale = 0;
     }
 }
