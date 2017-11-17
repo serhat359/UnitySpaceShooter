@@ -17,6 +17,8 @@ public class GameScript : MonoBehaviour
     public GameObject boss;
 
     private int waveCountBeforeBoss = 4;
+    private int enemyCountInWave = 4;
+    private Animator enemyAnimator;
 
     // Use this for initialization
     void Start()
@@ -26,6 +28,8 @@ public class GameScript : MonoBehaviour
         gameOverScreen.SetActive(false);
         gameOverWinImage.SetActive(false);
         gameOverLoseImage.SetActive(false);
+
+        enemyAnimator = enemyAnimations.GetComponent<Animator>();
 
         StartCoroutine(StartEnemySpawning());
     }
@@ -50,12 +54,15 @@ public class GameScript : MonoBehaviour
 
     IEnumerator CreateNewWave()
     {
-        for (int i = 0; i < 4; i++)
+        int animationNumber = UnityEngine.Random.Range(0, enemyAnimator.GetInteger(Parameters.AnimationCount)) + 1;
+
+        for (int i = 0; i < enemyCountInWave; i++)
         {
             var newEnemy = Instantiate(enemyObject, new Vector3(1.23f, 2.24f, 0), Quaternion.identity);
             Animator newEnemyAnimator = newEnemy.AddComponent<Animator>();
 
-            newEnemyAnimator.runtimeAnimatorController = enemyAnimations.GetComponent<Animator>().runtimeAnimatorController;
+            newEnemyAnimator.runtimeAnimatorController = enemyAnimator.runtimeAnimatorController;
+            newEnemyAnimator.SetTrigger(Parameters.Trigger + animationNumber);
 
             yield return new WaitForSeconds(0.5f);
         }
@@ -63,7 +70,7 @@ public class GameScript : MonoBehaviour
 
     IEnumerator StartBossBattle()
     {
-        GameObject boss = Instantiate(this.boss);
+        Instantiate(this.boss);
 
         // This line was written for syntax purposes
         yield return new WaitForSeconds(0);

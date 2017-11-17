@@ -12,4 +12,6 @@ public class Tags
 public class Parameters
 {
     public const string Die = "Die";
+    public const string Trigger = "Trigger";
+    public const string AnimationCount = "AnimationCount";
 }
