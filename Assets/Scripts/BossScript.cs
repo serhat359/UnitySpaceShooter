@@ -13,12 +13,13 @@ public class BossScript : MonoBehaviour
     public GameObject bulletLocation1;
     public GameObject bulletLocation2;
     public GameObject bossLaserBulletSound;
+    public GameObject bossDyingSound;
     public RuntimeAnimatorController spareAnimationController;
 
     Animator animator;
     private Vector3 positionOfDeath;
     private int currentExplosionCount = 0;
-    private const int lastExplosionCount = 5;
+    private const int explosionCount = 5;
 
     // Use this for initialization
     void Start()
@@ -101,10 +102,13 @@ public class BossScript : MonoBehaviour
 
     void DestroyedAnimationBegin()
     {
-        gameObject.transform.position = positionOfDeath;
-        currentExplosionCount++;
-
-        if (currentExplosionCount > lastExplosionCount)
+        if (currentExplosionCount < explosionCount)
+        {
+            gameObject.transform.position = positionOfDeath;
+            currentExplosionCount++;
+            Instantiate(bossDyingSound);
+        }
+        else
         {
             GameScript.instance.GameOverWin();
         }

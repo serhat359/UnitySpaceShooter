@@ -207,7 +207,10 @@ MonoBehaviour:
     type: 2}
   bulletLocation1: {fileID: 1398743712507254}
   bulletLocation2: {fileID: 1919913784333962}
-  bossLaserBulletSound: {fileID: 0}
+  bossLaserBulletSound: {fileID: 1857765419787650, guid: 60b58c5972699e643b88abcf49218e7b,
+    type: 2}
+  bossDyingSound: {fileID: 1453075819422468, guid: 35291f8ee843fe14f9aa7a37f11f8938,
+    type: 2}
   spareAnimationController: {fileID: 9100000, guid: 7dd903f546774ff40a9cc89116b586a9,
     type: 2}
 --- !u!212 &212120557490049854

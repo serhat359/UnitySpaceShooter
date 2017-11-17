@@ -15,6 +15,7 @@ public class MainPlayerScript : MonoBehaviour
     public GameObject laserLocation;
     public GameObject laserBulletSound;
     public GameObject fireGroup;
+    public GameObject dyingSound;
 
     private bool canFire = true;
 
@@ -88,9 +89,13 @@ public class MainPlayerScript : MonoBehaviour
 
     public void Die()
     {
-        animator.SetTrigger(Parameters.Die);
-        fireGroup.SetActive(false);
-        GameScript.instance.isAlive = false;
+        if (GameScript.instance.isAlive)
+        {
+            animator.SetTrigger(Parameters.Die);
+            Instantiate(dyingSound);
+            fireGroup.SetActive(false);
+            GameScript.instance.isAlive = false;
+        }
     }
 
     void DyingAnimationOver()

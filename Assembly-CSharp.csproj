@@ -54,6 +54,7 @@
      <Compile Include="Assets\Scripts\AnimationsScript.cs" />
      <Compile Include="Assets\Scripts\BossScript.cs" />
      <Compile Include="Assets\Scripts\DestroyAfterAWhileScript.cs" />
+     <Compile Include="Assets\Scripts\DestroySoundScript.cs" />
      <Compile Include="Assets\Scripts\EnemyScript.cs" />
      <Compile Include="Assets\Scripts\GameScript.cs" />
      <Compile Include="Assets\Scripts\IAnimatedLater.cs" />

@@ -1415,8 +1415,10 @@ MonoBehaviour:
   laserBulletTemp: {fileID: 1750121664724722, guid: 2859362061489a14fae0e076e5d82ead,
     type: 2}
   laserLocation: {fileID: 1514399524}
-  laserBulletSound: {fileID: 0}
+  laserBulletSound: {fileID: 1832465298005832, guid: cd31e66b412a4f2419d736177727b230,
+    type: 2}
   fireGroup: {fileID: 609098613}
+  dyingSound: {fileID: 1453075819422468, guid: 35291f8ee843fe14f9aa7a37f11f8938, type: 2}
 --- !u!50 &2057334780
 Rigidbody2D:
   serializedVersion: 4
