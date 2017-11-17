@@ -30,7 +30,7 @@ AnimationClip:
         outSlope: {x: 2.1245904, y: -3.4819672, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 2.0166667
+        time: 2
         value: {x: -0.02, y: -0.19, z: 0}
         inSlope: {x: 2.1245904, y: -3.4819672, z: -0}
         outSlope: {x: 0, y: -5.938983, z: 0}
@@ -100,7 +100,7 @@ AnimationClip:
         outSlope: 2.1245904
         tangentMode: 69
       - serializedVersion: 2
-        time: 2.0166667
+        time: 2
         value: -0.02
         inSlope: 2.1245904
         outSlope: 0
@@ -134,7 +134,7 @@ AnimationClip:
         outSlope: -3.4819672
         tangentMode: 69
       - serializedVersion: 2
-        time: 2.0166667
+        time: 2
         value: -0.19
         inSlope: -3.4819672
         outSlope: -5.938983
@@ -168,7 +168,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 69
       - serializedVersion: 2
-        time: 2.0166667
+        time: 2
         value: 0
         inSlope: -0
         outSlope: 0
@@ -191,7 +191,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 2.9833333
+  - time: 3
     functionName: IAnimatedLater.AnimationOver
     data: 
     objectReferenceParameter: {fileID: 0}
