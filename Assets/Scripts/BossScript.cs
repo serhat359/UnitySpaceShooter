@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,16 +16,27 @@ public class BossScript : MonoBehaviour
     public GameObject bossLaserBulletSound;
     public GameObject bossDyingSound;
     public RuntimeAnimatorController spareAnimationController;
+    public GameObject bossChargedLaser;
+    public GameObject bossChargingLaser;
+    public GameObject bossChargingLaserSound;
+    public GameObject bossChargedLaserSound;
 
     Animator animator;
     private Vector3 positionOfDeath;
     private int currentExplosionCount = 0;
     private const int explosionCount = 5;
+    private bool firingNormally = true;
+    private Coroutine bossChargeAttack;
+    private GameObject playingSound;
 
     // Use this for initialization
     void Start()
     {
         animator = GetComponent<Animator>();
+        SetEnabledLaser(bossChargedLaser, false);
+        SetEnabledLaser(bossChargingLaser, false);
+
+        this.bossChargeAttack = StartCoroutine(PrepareBossChargedAttack());
     }
 
     // Update is called once per frame
@@ -50,20 +62,8 @@ public class BossScript : MonoBehaviour
             if (this.bossLaserBulletSound != null)
                 Instantiate(this.bossLaserBulletSound);
 
-            StartCoroutine(DisableFire(1f / fireRatePerSeconds));
+            StartCoroutine(DisableFireFor(1f / fireRatePerSeconds));
         }
-    }
-
-    private IEnumerator DisableFire(float seconds)
-    {
-        canFire = false;
-        yield return new WaitForSeconds(seconds);
-        canFire = true;
-    }
-
-    void LoopAnimationStart()
-    {
-        canFire = true;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -82,9 +82,6 @@ public class BossScript : MonoBehaviour
             if (remainingLife <= 0)
             {
                 Die();
-
-                if (isBossAlive)
-                    Debug.LogFormat("Boss position of death: {0}", gameObject.transform.position);
             }
         }
         else if (other.tag == Tags.Player)
@@ -93,11 +90,9 @@ public class BossScript : MonoBehaviour
         }
     }
 
-    void Die()
+    void LoopAnimationStart()
     {
-        positionOfDeath = gameObject.transform.position;
-        isBossAlive = false;
-        animator.runtimeAnimatorController = spareAnimationController;
+        canFire = true;
     }
 
     void DestroyedAnimationBegin()
@@ -112,5 +107,77 @@ public class BossScript : MonoBehaviour
         {
             GameScript.instance.GameOverWin();
         }
+    }
+
+    private IEnumerator PrepareBossChargedAttack()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+
+            DisableFire();
+            SetEnabledLaser(bossChargingLaser, true);
+            playingSound = Instantiate(this.bossChargingLaserSound);
+            float audioLength = this.bossChargingLaserSound.GetComponent<AudioSource>().clip.length;
+
+            yield return new WaitForSeconds(audioLength);
+
+            SetEnabledLaser(bossChargingLaser, false);
+
+            SetEnabledLaser(bossChargedLaser, true);
+            playingSound = Instantiate(this.bossChargedLaserSound);
+
+            yield return new WaitForSeconds(1);
+
+            SetEnabledLaser(bossChargedLaser, false);
+
+            yield return new WaitForSeconds(2);
+
+            EnableFire();
+        }
+    }
+
+    private void SetEnabledLaser(GameObject laser, bool value)
+    {
+        laser.GetComponent<SpriteRenderer>().enabled = value;
+        laser.GetComponent<Collider2D>().enabled = value;
+    }
+
+    private void DisableFire()
+    {
+        firingNormally = false;
+
+        canFire = false;
+    }
+
+    private void EnableFire()
+    {
+        firingNormally = true;
+
+        canFire = true;
+    }
+
+    private IEnumerator DisableFireFor(float seconds)
+    {
+        if (firingNormally)
+            canFire = false;
+
+        yield return new WaitForSeconds(seconds);
+
+        if (firingNormally)
+            canFire = true;
+    }
+
+    private void Die()
+    {
+        StopCoroutine(bossChargeAttack);
+        SetEnabledLaser(bossChargedLaser, false);
+        SetEnabledLaser(bossChargingLaser, false);
+        if (playingSound != null)
+            Destroy(playingSound);
+
+        positionOfDeath = gameObject.transform.position;
+        isBossAlive = false;
+        animator.runtimeAnimatorController = spareAnimationController;
     }
 }
