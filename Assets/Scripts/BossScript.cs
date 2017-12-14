@@ -27,7 +27,7 @@ public class BossScript : MonoBehaviour
     private const int explosionCount = 5;
     private bool firingNormally = true;
     private Coroutine bossChargeAttack;
-    private GameObject playingSound;
+    private GameObject bossLaserSound;
 
     // Use this for initialization
     void Start()
@@ -117,7 +117,7 @@ public class BossScript : MonoBehaviour
 
             DisableFire();
             SetEnabledLaser(bossChargingLaser, true);
-            playingSound = Instantiate(this.bossChargingLaserSound);
+            bossLaserSound = Instantiate(this.bossChargingLaserSound);
             float audioLength = this.bossChargingLaserSound.GetComponent<AudioSource>().clip.length;
 
             yield return new WaitForSeconds(audioLength);
@@ -125,7 +125,7 @@ public class BossScript : MonoBehaviour
             SetEnabledLaser(bossChargingLaser, false);
 
             SetEnabledLaser(bossChargedLaser, true);
-            playingSound = Instantiate(this.bossChargedLaserSound);
+            bossLaserSound = Instantiate(this.bossChargedLaserSound);
 
             yield return new WaitForSeconds(1);
 
@@ -173,8 +173,8 @@ public class BossScript : MonoBehaviour
         StopCoroutine(bossChargeAttack);
         SetEnabledLaser(bossChargedLaser, false);
         SetEnabledLaser(bossChargingLaser, false);
-        if (playingSound != null)
-            Destroy(playingSound);
+        if (bossLaserSound != null)
+            Destroy(bossLaserSound);
 
         positionOfDeath = gameObject.transform.position;
         isBossAlive = false;
