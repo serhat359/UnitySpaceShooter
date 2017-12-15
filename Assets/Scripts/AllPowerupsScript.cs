@@ -6,6 +6,7 @@ using UnityEngine;
 public class AllPowerupsScript : MonoBehaviour
 {
     public GameObject powerupSpeed;
+    public GameObject powerupPower;
 
     // Use this for initialization
     void Start()
@@ -26,6 +27,10 @@ public class AllPowerupsScript : MonoBehaviour
         if (type == PowerupType.Speed)
         {
             powerUp = powerupSpeed;
+        }
+        else if (type == PowerupType.Power)
+        {
+            powerUp = powerupPower;
         }
         else
         {

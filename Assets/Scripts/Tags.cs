@@ -19,6 +19,7 @@ public class Parameters
 public class PowerupType
 {
     public const string Speed = "Speed";
+    public const string Power = "Power";
 
-    public static readonly string[] AllPowerUps = { Speed };
+    public static readonly string[] AllPowerUps = { Speed, Power };
 }

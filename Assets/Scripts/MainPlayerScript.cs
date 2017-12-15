@@ -17,11 +17,17 @@ public class MainPlayerScript : MonoBehaviour
     public GameObject laserBulletSound;
     public GameObject fireGroup;
     public GameObject dyingSound;
+
     public GameObject wings1;
+    private bool isWings1Active;
+
+    public GameObject power1;
+    private bool isPower1Active;
+
+    public GameObject gunLeft;
+    public GameObject gunRight;
 
     private bool canFire = true;
-
-    private bool isWings1Active = false;
 
     // Use this for initialization
     void Start()
@@ -36,6 +42,9 @@ public class MainPlayerScript : MonoBehaviour
     {
         SetEnabledPart(wings1, false);
         isWings1Active = false;
+
+        SetEnabledPart(power1, false);
+        isPower1Active = false;
     }
 
     // Update is called once per frame
@@ -51,14 +60,24 @@ public class MainPlayerScript : MonoBehaviour
         if (GameScript.instance.isAlive && canFire && Input.GetButton("Fire1"))
         {
             GameObject newBullet = Instantiate(this.laserBulletTemp);
-
             Rigidbody2D newBulletRigidBody = newBullet.GetComponent<Rigidbody2D>();
-
             // Set position
             newBullet.transform.position = this.laserLocation.transform.position;
-
             // Set velocity and direction
             newBulletRigidBody.velocity = Vector2.up * laserBulletSpeed;
+
+            if (isPower1Active)
+            {
+                GameObject rightBullet = Instantiate(this.laserBulletTemp, this.gunRight.transform.position, gunRight.transform.rotation);
+                Rigidbody2D rightBulletRigidBody = rightBullet.GetComponent<Rigidbody2D>();
+                rightBulletRigidBody.velocity = gunRight.transform.rotation * Vector2.up * laserBulletSpeed;
+
+                GameObject leftBullet = Instantiate(this.laserBulletTemp, this.gunLeft.transform.position, gunLeft.transform.rotation);
+                Rigidbody2D leftBulletRigidBody = leftBullet.GetComponent<Rigidbody2D>();
+                leftBulletRigidBody.velocity = gunLeft.transform.rotation * Vector2.up * laserBulletSpeed;
+            }
+
+            Debug.Log(gunLeft.transform.rotation.eulerAngles.z);
 
             // Create a bullet sound
             if (this.laserBulletSound != null)
@@ -119,6 +138,11 @@ public class MainPlayerScript : MonoBehaviour
         {
             SetEnabledPart(wings1, true);
             isWings1Active = true;
+        }
+        else if (type == PowerupType.Power)
+        {
+            SetEnabledPart(power1, true);
+            isPower1Active = true;
         }
         else
         {
