@@ -15,10 +15,18 @@ public class GameScript : MonoBehaviour
     public GameObject gameOverWinImage;
     public GameObject gameOverLoseImage;
     public GameObject boss;
+    public AllPowerupsScript powerUps;
 
     private int waveCountBeforeBoss = 4;
     private int enemyCountInWave = 4;
     private Animator enemyAnimator;
+    private int lastUsedWaveId = 0;
+
+    [HideInInspector]
+    public Dictionary<int, int> waveKillings;
+
+    [Range(0, 1)]
+    public float powerupDropProbability = 0.5f;
 
     // Use this for initialization
     void Start()
@@ -30,6 +38,8 @@ public class GameScript : MonoBehaviour
         gameOverLoseImage.SetActive(false);
 
         enemyAnimator = enemyAnimations.GetComponent<Animator>();
+
+        waveKillings = new Dictionary<int, int>();
 
         StartCoroutine(StartEnemySpawning());
     }
@@ -56,15 +66,38 @@ public class GameScript : MonoBehaviour
     {
         int animationNumber = UnityEngine.Random.Range(0, enemyAnimator.GetInteger(Parameters.AnimationCount)) + 1;
 
+        int waveId = ++lastUsedWaveId;
+        waveKillings.Add(waveId, enemyCountInWave);
+
         for (int i = 0; i < enemyCountInWave; i++)
         {
             var newEnemy = Instantiate(enemyObject, new Vector3(1.23f, 2.24f, 0), Quaternion.identity);
             Animator newEnemyAnimator = newEnemy.AddComponent<Animator>();
+            newEnemy.GetComponent<EnemyScript>().waveId = waveId;
 
             newEnemyAnimator.runtimeAnimatorController = enemyAnimator.runtimeAnimatorController;
             newEnemyAnimator.SetTrigger(Parameters.Trigger + animationNumber);
 
             yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    public void EnemyKilledInWave(int waveId, Vector3 position)
+    {
+        int newCount = waveKillings[waveId] - 1;
+        
+        waveKillings[waveId] = newCount;
+
+        if (newCount <= 0)
+        {
+            float random = UnityEngine.Random.Range(0f, 1f);
+            
+            if (random < powerupDropProbability)
+            {
+                int randomPowerupIndex = UnityEngine.Random.Range(0, PowerupType.AllPowerUps.Length);
+
+                powerUps.DropPowerup(PowerupType.AllPowerUps[randomPowerupIndex], position);
+            }
         }
     }
 

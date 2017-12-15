@@ -15,3 +15,10 @@ public class Parameters
     public const string Trigger = "Trigger";
     public const string AnimationCount = "AnimationCount";
 }
+
+public class PowerupType
+{
+    public const string Speed = "Speed";
+
+    public static readonly string[] AllPowerUps = { Speed };
+}

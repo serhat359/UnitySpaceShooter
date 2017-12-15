@@ -219,6 +219,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\AllPowerupsScript.cs" />
     <Compile Include="Assets\Scripts\AnimationsScript.cs" />
     <Compile Include="Assets\Scripts\BossScript.cs" />
     <Compile Include="Assets\Scripts\DestroyAfterAWhileScript.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Assets\Scripts\IAnimatedLater.cs" />
     <Compile Include="Assets\Scripts\LaserScript.cs" />
     <Compile Include="Assets\Scripts\MainPlayerScript.cs" />
+    <Compile Include="Assets\Scripts\PowerupScript.cs" />
     <Compile Include="Assets\Scripts\ScoreScript.cs" />
     <Compile Include="Assets\Scripts\Tags.cs" />
   </ItemGroup>

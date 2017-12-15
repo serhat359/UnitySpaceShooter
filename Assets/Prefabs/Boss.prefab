@@ -304,7 +304,7 @@ MonoBehaviour:
   isBossAlive: 1
   fireRatePerSeconds: 2
   bossLaserBulletSpeed: 10
-  remainingLife: 3000
+  remainingLife: 5000
   bossBulletTemp: {fileID: 1690796425925486, guid: 4c36dca0da993bd4b8718e929bc9e3fa,
     type: 2}
   bulletLocation1: {fileID: 1398743712507254}

@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class MainPlayerScript : MonoBehaviour
@@ -8,6 +8,7 @@ public class MainPlayerScript : MonoBehaviour
     Animator animator;
 
     public float horizontalSpeedMultiplier = 3f;
+    public float horizontalSpeedSecondMultiplier = 6f;
     public float verticalSpeedMultiplier = 3f;
     public float laserBulletSpeed = 10f;
     public float fireRatePerSeconds = 5;
@@ -16,14 +17,25 @@ public class MainPlayerScript : MonoBehaviour
     public GameObject laserBulletSound;
     public GameObject fireGroup;
     public GameObject dyingSound;
+    public GameObject wings1;
 
     private bool canFire = true;
+
+    private bool isWings1Active = false;
 
     // Use this for initialization
     void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        ResetPlayer();
+    }
+
+    private void ResetPlayer()
+    {
+        SetEnabledPart(wings1, false);
+        isWings1Active = false;
     }
 
     // Update is called once per frame
@@ -67,7 +79,9 @@ public class MainPlayerScript : MonoBehaviour
             vax = 0;
         }
 
-        rigidbody2D.velocity = new Vector2(hax * horizontalSpeedMultiplier, vax * verticalSpeedMultiplier);
+        float horSpeedMultiplier = isWings1Active ? horizontalSpeedSecondMultiplier : horizontalSpeedMultiplier;
+
+        rigidbody2D.velocity = new Vector2(hax * horSpeedMultiplier, vax * verticalSpeedMultiplier);
     }
 
     private IEnumerator DisableFire(float seconds)
@@ -91,6 +105,7 @@ public class MainPlayerScript : MonoBehaviour
     {
         if (GameScript.instance.isAlive)
         {
+            ResetPlayer();
             animator.SetTrigger(Parameters.Die);
             Instantiate(dyingSound);
             fireGroup.SetActive(false);
@@ -98,8 +113,28 @@ public class MainPlayerScript : MonoBehaviour
         }
     }
 
+    public void GiveAbilityPowerup(string type)
+    {
+        if (type == PowerupType.Speed)
+        {
+            SetEnabledPart(wings1, true);
+            isWings1Active = true;
+        }
+        else
+        {
+            throw new Exception(string.Format("Powerup type: {0} is not recognized", type));
+        }
+    }
+
     void DyingAnimationOver()
     {
         GameScript.instance.GameOverDead();
     }
+
+    private void SetEnabledPart(GameObject part, bool value)
+    {
+        part.GetComponent<SpriteRenderer>().enabled = value;
+        part.GetComponent<Collider2D>().enabled = value;
+    }
+
 }
