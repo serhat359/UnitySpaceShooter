@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -65,7 +64,7 @@ public class GameScript : MonoBehaviour
 
     IEnumerator CreateNewWave()
     {
-        int animationNumber = UnityEngine.Random.Range(0, enemyAnimator.GetInteger(Parameters.AnimationCount)) + 1;
+        int animationNumber = Random.Range(0, enemyAnimator.GetInteger(Parameters.AnimationCount)) + 1;
 
         int waveId = ++lastUsedWaveId;
         waveKillings.Add(waveId, enemyCountInWave);
@@ -91,11 +90,11 @@ public class GameScript : MonoBehaviour
 
         if (newCount <= 0)
         {
-            float random = UnityEngine.Random.Range(0f, 1f);
+            float random = Random.Range(0f, 1f);
 
             if (random < powerupDropProbability)
             {
-                int randomPowerupIndex = UnityEngine.Random.Range(0, PowerupType.AllPowerUps.Length);
+                int randomPowerupIndex = Random.Range(0, PowerupType.AllPowerUps.Length);
 
                 powerUps.DropPowerup(PowerupType.AllPowerUps[randomPowerupIndex], position);
             }
