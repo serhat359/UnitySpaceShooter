@@ -16,6 +16,7 @@ public class GameScript : MonoBehaviour
     public GameObject gameOverLoseImage;
     public GameObject boss;
     public AllPowerupsScript powerUps;
+    public AudioSource backGroundMusic;
 
     private int waveCountBeforeBoss = 4;
     private int enemyCountInWave = 4;
@@ -85,13 +86,13 @@ public class GameScript : MonoBehaviour
     public void EnemyKilledInWave(int waveId, Vector3 position)
     {
         int newCount = waveKillings[waveId] - 1;
-        
+
         waveKillings[waveId] = newCount;
 
         if (newCount <= 0)
         {
             float random = UnityEngine.Random.Range(0f, 1f);
-            
+
             if (random < powerupDropProbability)
             {
                 int randomPowerupIndex = UnityEngine.Random.Range(0, PowerupType.AllPowerUps.Length);
@@ -124,6 +125,7 @@ public class GameScript : MonoBehaviour
     private void GameOver()
     {
         gameOverScreen.SetActive(true);
+        backGroundMusic.Pause();
         Time.timeScale = 0;
     }
 }
