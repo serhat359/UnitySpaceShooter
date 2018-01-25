@@ -53,11 +53,16 @@ public class MainPlayerScript : MonoBehaviour
         HandleMovement();
 
         HandleFiring();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameScript.instance.PauseGame();
+        }
     }
 
     private void HandleFiring()
     {
-        if (GameScript.instance.isAlive && canFire && Input.GetButton("Fire1"))
+        if (GameScript.instance.isAlive && canFire && CustomInput.GetButton("Fire1"))
         {
             GameObject newBullet = Instantiate(this.laserBulletTemp);
             Rigidbody2D newBulletRigidBody = newBullet.GetComponent<Rigidbody2D>();
@@ -89,8 +94,8 @@ public class MainPlayerScript : MonoBehaviour
 
     private void HandleMovement()
     {
-        float hax = Input.GetAxis("Horizontal");
-        float vax = Input.GetAxis("Vertical");
+        float hax = CustomInput.GetAxis("Horizontal");
+        float vax = CustomInput.GetAxis("Vertical");
 
         if (!GameScript.instance.isAlive)
         {

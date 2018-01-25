@@ -11,6 +11,7 @@ public class GameScript : MonoBehaviour
     public GameObject enemyObject;
     public GameObject enemyAnimations;
     public GameObject gameOverScreen;
+    public GameObject pauseScreen;
     public GameObject gameOverWinImage;
     public GameObject gameOverLoseImage;
     public GameObject boss;
@@ -21,6 +22,7 @@ public class GameScript : MonoBehaviour
     private int enemyCountInWave = 4;
     private Animator enemyAnimator;
     private int lastUsedWaveId = 0;
+    private bool isGamePaused = false;
 
     [HideInInspector]
     public Dictionary<int, int> waveKillings;
@@ -31,8 +33,10 @@ public class GameScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Time.timeScale = 1;
         instance = this;
         isAlive = true;
+        pauseScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         gameOverWinImage.SetActive(false);
         gameOverLoseImage.SetActive(false);
@@ -107,6 +111,22 @@ public class GameScript : MonoBehaviour
 
         // This line was written for syntax purposes
         yield return new WaitForSeconds(0);
+    }
+
+    public void PauseGame()
+    {
+        if (isGamePaused) // We should continue the game here
+        {
+            Time.timeScale = 1;
+            pauseScreen.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 0;
+            pauseScreen.SetActive(true);
+        }
+
+        isGamePaused = !isGamePaused;
     }
 
     public void GameOverDead()
