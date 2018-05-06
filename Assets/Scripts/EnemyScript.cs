@@ -3,6 +3,7 @@
 public class EnemyScript : MonoBehaviour, IAnimatedLater
 {
     public int waveId = 0;
+    public bool killedByAnimation = false;
 
     // Use this for initialization
     void Start()
@@ -18,6 +19,7 @@ public class EnemyScript : MonoBehaviour, IAnimatedLater
 
     void IAnimatedLater.AnimationOver()
     {
+        killedByAnimation = true;
         Destroy(gameObject);
     }
 
@@ -28,6 +30,7 @@ public class EnemyScript : MonoBehaviour, IAnimatedLater
 
     private void OnDestroy()
     {
-        GameScript.instance.EnemyKilledInWave(waveId, transform.position);
+        if (!killedByAnimation)
+            GameScript.instance.EnemyKilledInWave(waveId, transform.position);
     }
 }
