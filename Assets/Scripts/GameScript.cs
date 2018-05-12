@@ -1,19 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameScript : MonoBehaviour
 {
+    public enum ControllerState
+    {
+        Pause,
+        Player,
+    }
+
+    private const string FirstLevel = "FirstScene";
+
     public static GameScript instance;
 
     public int score = 0;
     public bool isAlive = true;
+    public ControllerState controllerState = ControllerState.Pause;
     public GameObject enemyObject;
     public GameObject enemyAnimations;
     public GameObject gameOverScreen;
     public GameObject pauseScreen;
     public GameObject gameOverWinImage;
     public GameObject gameOverLoseImage;
+    public GameObject playAgainButton;
     public GameObject boss;
     public AllPowerupsScript powerUps;
     public AudioSource backGroundMusic;
@@ -29,17 +40,23 @@ public class GameScript : MonoBehaviour
 
     [Range(0, 1)]
     public float powerupDropProbability = 0.5f;
-
-    // Use this for initialization
+    
     void Start()
+    {
+        ResetValues();
+    }
+
+    void ResetValues()
     {
         Time.timeScale = 1;
         instance = this;
         isAlive = true;
+        controllerState = ControllerState.Player;
         pauseScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         gameOverWinImage.SetActive(false);
         gameOverLoseImage.SetActive(false);
+        playAgainButton.SetActive(false);
 
         enemyAnimator = enemyAnimations.GetComponent<Animator>();
 
@@ -48,10 +65,9 @@ public class GameScript : MonoBehaviour
         StartCoroutine(StartEnemySpawning());
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReloadScene()
     {
-
+        SceneManager.LoadScene(FirstLevel, LoadSceneMode.Single);
     }
 
     IEnumerator StartEnemySpawning()
@@ -119,11 +135,15 @@ public class GameScript : MonoBehaviour
         {
             Time.timeScale = 1;
             pauseScreen.SetActive(false);
+            controllerState = ControllerState.Player;
+            backGroundMusic.UnPause();
         }
-        else
+        else // We should pause the game here
         {
             Time.timeScale = 0;
             pauseScreen.SetActive(true);
+            controllerState = ControllerState.Pause;
+            backGroundMusic.Pause();
         }
 
         isGamePaused = !isGamePaused;
@@ -146,5 +166,7 @@ public class GameScript : MonoBehaviour
         gameOverScreen.SetActive(true);
         backGroundMusic.Pause();
         Time.timeScale = 0;
+        playAgainButton.SetActive(true);
+        controllerState = ControllerState.Pause;
     }
 }

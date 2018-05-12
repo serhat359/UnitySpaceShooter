@@ -62,7 +62,7 @@ public class MainPlayerScript : MonoBehaviour
 
     private void HandleFiring()
     {
-        if (GameScript.instance.isAlive && canFire && CustomInput.GetButton("Fire1"))
+        if (GameScript.instance.controllerState == GameScript.ControllerState.Player && GameScript.instance.isAlive && canFire && CustomInput.GetButton("Fire1"))
         {
             GameObject newBullet = Instantiate(this.laserBulletTemp);
             Rigidbody2D newBulletRigidBody = newBullet.GetComponent<Rigidbody2D>();
@@ -97,7 +97,7 @@ public class MainPlayerScript : MonoBehaviour
         float hax = CustomInput.GetAxis("Horizontal");
         float vax = CustomInput.GetAxis("Vertical");
 
-        if (!GameScript.instance.isAlive)
+        if (!(GameScript.instance.controllerState == GameScript.ControllerState.Player && GameScript.instance.isAlive))
         {
             hax = 0;
             vax = 0;
