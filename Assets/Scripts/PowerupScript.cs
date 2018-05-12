@@ -8,13 +8,14 @@ public class PowerupScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        var rigidBody2D = gameObject.GetComponent<Rigidbody2D>();
+        rigidBody2D.velocity = new Vector2(0, -powerUpSpeed * 80);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(0, -powerUpSpeed);
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
