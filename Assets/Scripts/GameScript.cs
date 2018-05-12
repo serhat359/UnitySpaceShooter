@@ -10,9 +10,7 @@ public class GameScript : MonoBehaviour
         Pause,
         Player,
     }
-
-    private const string FirstLevel = "FirstScene";
-
+    
     public static GameScript instance;
 
     public int score = 0;
@@ -67,7 +65,7 @@ public class GameScript : MonoBehaviour
 
     public void ReloadScene()
     {
-        SceneManager.LoadScene(FirstLevel, LoadSceneMode.Single);
+        SceneManager.LoadScene(Scene.FirstLevel, LoadSceneMode.Single);
     }
 
     IEnumerator StartEnemySpawning()

@@ -20,3 +20,8 @@ public class PowerupType
 
     public static readonly string[] AllPowerUps = { Speed, Power };
 }
+
+public class Scene
+{
+    public const string FirstLevel = "FirstScene";
+}
